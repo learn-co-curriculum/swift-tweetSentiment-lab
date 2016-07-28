@@ -11,7 +11,7 @@ import Foundation
 
 class Sentiment140API {
     
-    class func getPolarityOfTweets(tweets: [NSDictionary], query: String, completion:(String) -> Void){
+    class func getPolarityOfTweets(tweets: [NSDictionary], query: String, completion: (String) -> Void) {
         
         var totalPolarityValue = 0
         var averagePolarityValue = 0
@@ -20,63 +20,54 @@ class Sentiment140API {
         
         for tweet in tweets{
             
-            let sentiment140URL = Sentiment140API.urlFromTweet(tweet, query: query)
+            let sentiment140URL = Sentiment140API.urlFromTweet(tweet, query : query)
             let task = mySession.dataTaskWithURL(sentiment140URL, completionHandler: { (data, response, error) in
                 
                 if (error != nil) {
+                
                     print(error?.localizedDescription)
                     completion("nil")
                 }
                 
                 do{
                     if let unwrappedData = data {
-                        
+                    
                         let resultsDictionary = try NSJSONSerialization.JSONObjectWithData(unwrappedData, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                        
                         let results = resultsDictionary["results"] as? NSDictionary
 
                         if let unwrappedResult = results {
-                            
+                        
                             let polarity = unwrappedResult["polarity"] as! Int
-                            
                             let polarityInt = polarity
-                            
                             totalPolarityValue += polarityInt
                         }
                         
-                        if numbrtOfTweetsCheckedForPolarity == tweets.count-1{
-                            
+                        if numbrtOfTweetsCheckedForPolarity == tweets.count - 1 {
+                        
                             averagePolarityValue = totalPolarityValue/tweets.count
-                            
                             completion(String(averagePolarityValue))
                         }
                     }
                 } catch{
-                    
+                
                     print("it's the sentiment catch error\(data): \(error) ")
-                    
                 }
                 
                 numbrtOfTweetsCheckedForPolarity += 1
-                
-                
             })
+            
             task.resume()
         }
     }
     
-    class func urlFromTweet(tweet: NSDictionary, query: String) -> NSURL{
-        
+    class func urlFromTweet(tweet: NSDictionary, query: String) -> NSURL {
+    
         let unescapedTweetString = tweet["text"]
-        
         let escapedTweetString = unescapedTweetString?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())
-        
         let sentimentedString = "\(Constants.SENTIMENT140_BASE_URL)&query=\(query)&text=\(escapedTweetString!)"
-        
         let sentiment140URL = NSURL(string: sentimentedString)
         
         if let unwrappedReturnUrl = sentiment140URL{
-            
             return unwrappedReturnUrl
         }
         
