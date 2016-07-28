@@ -11,7 +11,7 @@ import Foundation
 
 class Sentiment140API {
     
-    class func getPolarityOfTweets(tweets: [NSDictionary] ,query: String, completion:(String) -> Void){
+    class func getPolarityOfTweets(tweets: [NSDictionary], query: String, completion:(String) -> Void){
         
         var totalPolarityValue = 0
         var averagePolarityValue = 0
