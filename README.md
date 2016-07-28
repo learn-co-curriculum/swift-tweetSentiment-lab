@@ -2,7 +2,7 @@
 
 # Tweet Sentiment
 
-Let's find out how The Flatiron School is doing on Social Media. We'll need two APIS to do this. One to get the tweets, and another to do what's called [sentiment analysis](http://en.wikipedia.org/wiki/Sentiment_analysis).
+Let's find out how the Flatiron School is doing on Social Media. We'll need two APIS to do this. One to get the tweets, and another to do what's called [sentiment analysis](http://en.wikipedia.org/wiki/Sentiment_analysis).
 
 ## Instructions
 
